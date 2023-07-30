@@ -32,7 +32,7 @@ pipeline
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    openshift.newBuild("--name=chandratpm --allow-missing-imagestream-tags","--binary=true")
+                    openshift.newBuild("--name=chandratpm --allow-missing-imagestream-tags","--image-stream=openjdk18-openshift:1.14-3","--binary=true")
                   }
                 }
               }
@@ -47,7 +47,7 @@ pipeline
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    openshift.selector("bc", "chandratpm").startBuild("--from-file=target/chandratpm-0.0.1-SNAPSHOT.jar", "--follow")
+                    openshift.selector("bc", "chandratpm").startBuild("--from-dir=./ocp","--follow","--wait=true")
                   }
                 }
               }
