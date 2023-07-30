@@ -13,7 +13,7 @@ pipeline
                   version = pom.version
               }
                sh
-               mvn " -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
+               mvn "-Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
             }
           }
           stage('Create Image Builder') {
