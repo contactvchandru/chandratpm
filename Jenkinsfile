@@ -8,7 +8,7 @@ pipeline
           {
             steps
              {
-              git branch: 'main', url: 'https://github.com/contactvchandru/chandratpm.git'
+              git branch: 'master', url: 'https://github.com/contactvchandru/chandratpm.git'
               script {
                   def pom = readMavenPom file: 'pom.xml'
                   version = pom.version
