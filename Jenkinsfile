@@ -12,7 +12,7 @@ pipeline
                   def pom = readMavenPom file: 'pom.xml'
                   version = pom.version
               }
-               sh "D:\\softwares/apache-maven-3.9.3-bin\\apache-maven-3.9.3\\bin\\mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
+               sh "D:\\softwares\\apache-maven-3.9.3-bin\\apache-maven-3.9.3\\bin\\mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
             }
           }
           stage('Create Image Builder') {
