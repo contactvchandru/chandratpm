@@ -28,15 +28,6 @@ pipeline
                 }
               }
             }
-            steps {
-              script {
-                openshift.withCluster() {
-                  openshift.withProject() {
-                    openshift.newBuild("--name=chandratpm", "--image-stream=openjdk18-openshift:1.14-3", "--binary=true")
-                  }
-                }
-              }
-            }
           }
           stage('Build Image') {
             steps {
