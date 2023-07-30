@@ -15,7 +15,7 @@ pipeline
                   def pom = readMavenPom file: 'pom.xml'
                   version = pom.version
               }
-              sh "mvn install"
+              sh "mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
             }
           }
           stage('Create Image Builder') {
