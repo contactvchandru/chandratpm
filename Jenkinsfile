@@ -12,7 +12,8 @@ pipeline
                   def pom = readMavenPom file: 'pom.xml'
                   version = pom.version
               }
-               sh "/cygdrive/d/softwares/apache-maven-3.9.3-bin/apache-maven-3.9.3/bin/mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
+               sh
+               mvn " -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
             }
           }
           stage('Create Image Builder') {
