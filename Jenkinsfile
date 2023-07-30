@@ -67,7 +67,7 @@ pipeline
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    def app = openshift.newApp("chandratpm", "--as-deployment-config")
+                    def app = openshift.newApp("chandratpm:latest --allow-missing-imagestream-tags", "--as-deployment-config")
                     app.narrow("svc").expose();
                   }
                 }
