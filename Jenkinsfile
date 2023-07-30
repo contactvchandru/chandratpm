@@ -28,6 +28,15 @@ pipeline
                 }
               }
             }
+          steps {
+              script {
+                openshift.withCluster() {
+                  openshift.withProject() {
+                    openshift.newBuild("--name=chandratpm","--binary=true")
+                  }
+                }
+              }
+            }
           }
           stage('Build Image') {
             steps {
