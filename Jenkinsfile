@@ -32,7 +32,7 @@ pipeline
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    openshift.newBuild("--name=chandratpm","--image-stream="cpmcimage","--binary=true")
+                    openshift.newBuild("--name=chandratpm:latest --allow-missing-imagestream-tags","--binary=true")
                   }
                 }
               }
