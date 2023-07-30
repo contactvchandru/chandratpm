@@ -1,7 +1,10 @@
 pipeline
     {
        agent any
-       def mvnHome = tool name: 'maven-3.9.3', type: 'maven'
+        tools { 
+           maven 'M2_HOME' 
+           jdk 'JAVA_HOME' 
+          }
        stages
         {
           stage('Build App')
@@ -13,7 +16,7 @@ pipeline
                   def pom = readMavenPom file: 'pom.xml'
                   version = pom.version
               }
-               sh "${mvnHome}/bin/mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
+               sh "mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
             }
           }
           stage('Create Image Builder') {
