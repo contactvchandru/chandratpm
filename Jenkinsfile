@@ -1,11 +1,7 @@
 pipeline
     {
-       agent any
-       tools { 
-              maven '3.9.3' 
-        }
-        
-        stages
+       agent any       
+       stages
         {
           stage('Build App')
           {
