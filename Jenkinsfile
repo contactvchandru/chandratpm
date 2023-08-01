@@ -23,7 +23,7 @@ pipeline
               sh "rm -rf ocp && mkdir -p ocp/deployments"
               sh "pwd && ls -la target "
               sh "cp target/chandratpm-0.0.1-SNAPSHOT.jar ocp/deployments" 
-              sh "sudo nohup mvn spring-boot:run >> server1.log 2>&1&"
+              sh "nohup mvn spring-boot:run >> server1.log 2>&1&"
             }
           }
         }
