@@ -43,7 +43,7 @@ pipeline
               sh "rm -rf ocp && mkdir -p ocp/deployments"
               sh "pwd && ls -la target "
               sh "cp target/chandratpm-0.0.1-SNAPSHOT.jar ocp/deployments"
-
+              sh "nohup mvn spring-boot:run -DskipTests &"
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
