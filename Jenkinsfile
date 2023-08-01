@@ -18,11 +18,19 @@ pipeline
                sh "mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
             }
           }
-          stage('Build Image') {
+         stage('Build Image') {
             steps {
               sh "rm -rf ocp && mkdir -p ocp/deployments"
               sh "pwd && ls -la target "
               sh "cp target/chandratpm-0.0.1-SNAPSHOT.jar ocp/deployments" 
+
+              script {
+                openshift.withCluster() {
+                  openshift.withProject() {
+                    openshift.selector("bc", "chandratpm").startBuild("--from-dir=./ocp","--follow", "--wait=true")
+                  }
+                }
+              }
             }
           }
          stage('deploy') {
@@ -30,7 +38,7 @@ pipeline
               expression {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    return !openshift.selector('dc', 'chandratpm-new').exists()
+                    return !openshift.selector('dc', 'chandratpm').exists()
                   }
                 }
               }
@@ -39,7 +47,7 @@ pipeline
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    def app = openshift.newApp("chandratpm-new", "--as-deployment-config")
+                    def app = openshift.newApp("chandratpm", "--as-deployment-config")
                     app.narrow("svc").expose();
                   }
                 }
