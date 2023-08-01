@@ -23,7 +23,27 @@ pipeline
               sh "rm -rf ocp && mkdir -p ocp/deployments"
               sh "pwd && ls -la target "
               sh "cp target/chandratpm-0.0.1-SNAPSHOT.jar ocp/deployments" 
-              sh "mvn spring-boot:run >> server1.log 2>&1&"
+            }
+          }
+         stage('deploy') {
+            when {
+              expression {
+                openshift.withCluster() {
+                  openshift.withProject() {
+                    return !openshift.selector('dc', 'chandratpm-new').exists()
+                  }
+                }
+              }
+            }
+            steps {
+              script {
+                openshift.withCluster() {
+                  openshift.withProject() {
+                    def app = openshift.newApp("chandratpm-new", "--as-deployment-config")
+                    app.narrow("svc").expose();
+                  }
+                }
+              }
             }
           }
         }
