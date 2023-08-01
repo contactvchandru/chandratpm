@@ -27,7 +27,7 @@ pipeline
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    openshift.selector("bc", "chandratpm").startBuild("--from-file=target/chandratpm-0.0.1-SNAPSHOT.jar","--wait=true")
+                    openshift.selector("bc", "chandratpm").startBuild("--from-file=target/chandratpm-0.0.1-SNAPSHOT.jar","--follow")
                   }
                 }
               }
