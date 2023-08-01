@@ -18,6 +18,26 @@ pipeline
                sh "mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
             }
           }
+        stage('Create Image Builder') {
+            when {
+              expression {
+                openshift.withCluster() {
+                  openshift.withProject() {
+                    return !openshift.selector("bc", "chandratpm").exists();
+                  }
+                }
+              }
+            }
+            steps {
+              script {
+                openshift.withCluster() {
+                  openshift.withProject() {
+                    openshift.newBuild("--name=chandratpm --allow-missing-imagestream-tags","--binary=true")
+                  }
+                }
+              }
+            }
+          }
          stage('Build Image') {
             steps {
               sh "rm -rf ocp && mkdir -p ocp/deployments"
