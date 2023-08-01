@@ -3,7 +3,7 @@ pipeline {
       tools {
         maven 'maven.3.9.3'
       }
-      agent any
+      agent { dockerfile true }
   stages {
       stage('Build App')
           {
