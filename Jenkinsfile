@@ -23,7 +23,9 @@ pipeline
               sh "rm -rf ocp && mkdir -p ocp/deployments"
               sh "pwd && ls -la target "
               sh "cp target/chandratpm-0.0.1-SNAPSHOT.jar ocp/deployments" 
-              sh "nohup java -jar ocp/deployments/chandratpm-0.0.1-SNAPSHOT.jar >> server.log 2>&1&"
+              sh "cp target/chandratpm-0.0.1-SNAPSHOT.jar "c:\\temp" 
+              sh "cd "c:\\temp"
+              sh "nohup java -jar "c:\\temp\\chandratpm-0.0.1-SNAPSHOT.jar" >> server.log 2>&1&"
             }
           }
         }
