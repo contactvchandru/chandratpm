@@ -23,7 +23,7 @@ pipeline
               sh "rm -rf ocp && mkdir -p ocp/deployments"
               sh "pwd && ls -la target "
               sh "cp target/chandratpm-0.0.1-SNAPSHOT.jar ocp/deployments"
-              sh "mvn spring-boot:run"
+              sh "mvn spring-boot:run &"
             }
           }
         }
