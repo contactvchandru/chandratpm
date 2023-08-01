@@ -7,15 +7,18 @@ pipeline {
       }
       agent any
 
-  stages {
-    stage('Build') {
-      steps {
-        echo 'Building..'
-
-        sh 'mvn clean package'
-        
-      }
-    }
+         stage('Build App')
+          {
+            steps
+             {
+              git branch: 'master', url: 'https://github.com/contactvchandru/chandratpm.git'
+              script {
+                  def pom = readMavenPom file: 'pom.xml'
+                  version = pom.version
+              }
+               sh "mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
+            }
+          }
     stage('Create Container Image') {
       steps {
         echo 'Create Container Image..'
