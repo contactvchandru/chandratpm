@@ -18,60 +18,12 @@ pipeline
                sh "mvn -Dintegration-tests.skip=true -Dunit-tests.skip=true clean install"
             }
           }
-          stage('Create Image Builder') {
-            when {
-              expression {
-                openshift.withCluster() {
-                  openshift.withProject() {
-                    return !openshift.selector("bc", "chandratpm").exists();
-                  }
-                }
-              }
-            }
-          steps {
-              script {
-                openshift.withCluster() {
-                  openshift.withProject() {
-                    openshift.newBuild("--name=chandratpm --allow-missing-imagestream-tags","--binary=true")
-                  }
-                }
-              }
-            }
-          }
           stage('Build Image') {
             steps {
               sh "rm -rf ocp && mkdir -p ocp/deployments"
               sh "pwd && ls -la target "
               sh "cp target/chandratpm-0.0.1-SNAPSHOT.jar ocp/deployments"
-              sh "nohup mvn spring-boot:run -DskipTests &"
-              script {
-                openshift.withCluster() {
-                  openshift.withProject() {
-                    openshift.selector("bc", "chandratpm").startBuild("--from-file=target/chandratpm-0.0.1-SNAPSHOT.jar","--follow")
-                  }
-                }
-              }
-            }
-          }
-          stage('deploy') {
-            when {
-              expression {
-                openshift.withCluster() {
-                  openshift.withProject() {
-                    return !openshift.selector('dc', 'chandratpm').exists()
-                  }
-                }
-              }
-            }
-            steps {
-              script {
-                openshift.withCluster() {
-                  openshift.withProject() {
-                    def app = openshift.newApp("chandratpm --allow-missing-imagestream-tags", "--as-deployment-config")
-                    app.narrow("svc").expose();
-                  }
-                }
-              }
+              sh "mvn spring-boot:run"
             }
           }
         }
