@@ -4,8 +4,8 @@ pipeline {
         maven 'maven.3.9.3'
       }
       agent any
-
-         stage('Build App')
+  stages {
+      stage('Build App')
           {
             steps
              {
@@ -64,3 +64,4 @@ pipeline {
       }
     }
   }
+ }
