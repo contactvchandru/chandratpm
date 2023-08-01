@@ -48,7 +48,7 @@ pipeline {
               def deployment = openshift.selector("dc", "codelikethewind")
 
               if(!deployment.exists()){
-                openshift.newApp('codelikethewind', "--as-deployment-config").narrow('svc').expose()
+                openshift.newApp('codelikethewind --allow-missing-imagestream-tags', "--as-deployment-config").narrow('svc').expose()
               }
 
               timeout(5) { 
