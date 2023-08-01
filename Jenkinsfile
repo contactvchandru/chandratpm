@@ -27,7 +27,7 @@ pipeline {
                 def buildConfigExists = openshift.selector("bc", "codelikethewind").exists()
 
                 if(!buildConfigExists){
-                    openshift.newBuild("--name=codelikethewind --allow-missing-imagestream-tags","--docker-image=registry.redhat.io/jboss-eap-7/eap72-openjdk11-openshift-rhel8","--binary=true")
+                    openshift.newBuild("--name=codelikethewind --allow-missing-imagestream-tags","--binary=true")
                 }
 
                 openshift.selector("bc", "codelikethewind").startBuild("--from-file=target/chandratpm-0.0.1-SNAPSHOT.jar", "--follow")
