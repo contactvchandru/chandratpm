@@ -23,7 +23,7 @@ pipeline {
 				bat "${mavenHome}/bin/mvn test"
 			}
 		}
-		stage ('Scan and Build Jar File') {
+		stage ('SonarQube') {
                     steps {
                         withSonarQubeEnv(installationName: 'SonarQubeScanner', credentialsId: 'id1') {
                         bat "${mavenHome}/bin/mvn sonar:sonar"
