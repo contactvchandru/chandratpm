@@ -23,12 +23,6 @@ pipeline {
 				bat "${mavenHome}/bin/mvn test"
 			}
 		}
-
-		stage('Deploy') {
-			steps {
-			    bat "${mavenHome}/bin/mvn jar:jar deploy:deploy"
-			}
-		}
                stage ('Scan and Build Jar File') {
                        steps {
                            withSonarQubeEnv(installationName: 'Production SonarQubeScanner', credentialsId: 'squ_66d32884289bda4620279f00be2531f49e7a906b') {
