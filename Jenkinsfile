@@ -13,25 +13,26 @@ pipeline {
 
 		stage('Build'){
 			steps {
-				bat "mvn clean install -DskipTests"
+				
+				bat "${mavenHome}/bin/mvn clean install -DskipTests"
 			}
 		}
 
 		stage('Test'){
 			steps{
-				bat "mvn test"
+				bat "${mavenHome}/bin/mvn test"
 			}
 		}
 
 		stage('Deploy') {
 			steps {
-			    bat "mvn jar:jar deploy:deploy"
+			    bat "${mavenHome}/bin/mvn jar:jar deploy:deploy"
 			}
 		}
                stage ('Scan and Build Jar File') {
                        steps {
                            withSonarQubeEnv(installationName: 'Production SonarQubeScanner', credentialsId: 'squ_66d32884289bda4620279f00be2531f49e7a906b') {
-                           bat 'mvn sonar:sonar'
+                           bat '${mavenHome}/bin/mvn sonar:sonar'
                       }
                }
            }
